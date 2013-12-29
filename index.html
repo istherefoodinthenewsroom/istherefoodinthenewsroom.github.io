@@ -36,8 +36,8 @@
         </ul>
     </nav>
 
-    <div style="color:white;" class="col-md-12 text-center" id="answer">
-        <h1 id="hed" style="font-size:10em; font-weight:900;">No.</h1>
+    <div style="color:white;" class="text-center" id="answer">
+        <h1 id="hed" style="font-size:10em; font-weight:900;"></h1>
         <div id="food"></div>
     </div>
 
@@ -45,7 +45,7 @@
         function displayContent(json) {
             if (json.feed.entry && json.feed.entry.length) {
                 $('body').css('background-color', '#2ca25f');
-                $('#hed').html('Yes.')
+                $('#hed').html('Yes.').css('margin-bottom', '150px');
                 var len = json.feed.entry.length;
                 var list_content = '';
                 for (var i = 0; i < len; i++) {
