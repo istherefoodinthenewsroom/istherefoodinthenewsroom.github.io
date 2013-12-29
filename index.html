@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
     <style>
-        body { padding-top: 90px; }
+        body { padding-top: 90px; background-color: #e34a33; }
     </style>
 
     <title>Is there food in the newsroom?</title>
@@ -30,11 +30,36 @@
 <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <ul class="nav navbar-nav">
-            <li><a href="https://docs.google.com/spreadsheet/ccc?key=0Ag4MM37uq7FmdEJ4OFlNR01qejY5d21pR09xZWx4RWc&usp=sharing" target="_blank">Add or delete an entry</a>
-            </li>
-        </ul>
+        
+        <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Is there food in the newsroom?</a>
+  </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right"style="margin-right:0;">
+      <li><a href="#" data-toggle="modal" data-target="#wut">Instructions</a></li>
+    </ul>
+        </div>
     </nav>
+
+<div class="modal fade" id="wut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-body">
+     <p>Is there food in the newsroom? Is once-available food now gone? <a href="https://docs.google.com/spreadsheet/ccc?key=0Ag4MM37uq7FmdEJ4OFlNR01qejY5d21pR09xZWx4RWc&usp=sharing" target="_blank">Update the list accordingly.</a>
+     </p>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <div style="color:white;" class="text-center" id="answer">
         <h1 id="hed" style="font-size:10em; font-weight:900;"></h1>
@@ -44,7 +69,7 @@
     <script>
         function displayContent(json) {
             if (json.feed.entry && json.feed.entry.length) {
-                $('body').css('background-color', '#2ca25f');
+                $('body').css('background-color', '#006d2c');
                 $('#hed').html('Yes.').css('margin-bottom', '150px');
                 var len = json.feed.entry.length;
                 var list_content = '';
@@ -52,14 +77,14 @@
                     var where = json.feed.entry[i].gsx$where.$t.toLowerCase();
                     var what = json.feed.entry[i].gsx$what.$t.toLowerCase();
                     list_content += [
-                        '<h1>' + what + ' <i class="fa fa-arrow-right"></i> ' + where + '</h1>'
+                        '<h1>' + what + ' <i class="fa fa-long-arrow-right"></i> ' + where + '</h1>'
                     ].join('');
 
                     document.getElementById('food').innerHTML = list_content
                 }
 
             } else {
-                $('body').css('background-color', '#e34a33');
+                $('body').css('background-color', '#b30000');
                 $('#hed').html('No.')
             }
 
