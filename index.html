@@ -120,7 +120,7 @@ function minDiff(e) {
                 for (var i = 0; i < len; i++) {
                     var where = json.feed.entry[i].gsx$where.$t.toLowerCase();
                     var what = json.feed.entry[i].gsx$what.$t.toLowerCase();
-                    var when = json.feed.entry[i].gsx$timestamp.$t.toLowerCase();
+                    var when = json.feed.entry[i].gsx$timestamp;
                     var ago = minDiff(when);
                     if (ago == 1) { minutes = "minute"} else {minutes = "minutes" }
                     list_content += [
