@@ -42,7 +42,7 @@
   </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">    
     <ul class="nav navbar-nav navbar-right"style="margin-right:0;">
-      <li><a href="#" data-toggle="modal" data-target="#wut">Instructions</a></li>
+      <li><a href="#" id="launch" data-toggle="modal" data-target="#wut">Instructions</a></li>
     </ul>
         <ul class="nav navbar-nav">
       <li><a href="#"><em>A Team Sarpy joint</em></a></li>    
@@ -128,7 +128,7 @@ var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
                         else {time = hour + ':' + minutes + ' ' + suffix};
 
                     list_content += [
-                        '<h3 class="listitem" data-date="' + when + '">' + what + ' <i class="fa fa-long-arrow-right"></i> ' + where + '<br/><small>spotted ' + days[weekday] + ' at ' + time + '</small></h3>'
+                        '<h3 class="listitem" data-date="' + when + '">' + what + ' <i class="fa fa-arrow-circle-right"></i> ' + where + '<br/><small>spotted ' + days[weekday] + ' at ' + time + '</small></h3>'
                     ].join('');
 
                     document.getElementById('food').innerHTML = '<ul class="list-group">' + list_content
@@ -142,6 +142,10 @@ var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 
         }
 
+$('#launch').click(function() {
+setTimeout(function() {$('#what').focus()}, 500);
+});
+        
 $(function(){
     var itemsArray = $('h3.listitem');
     itemsArray.sort(function(a,b){
