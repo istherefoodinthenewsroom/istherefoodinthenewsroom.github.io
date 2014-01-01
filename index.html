@@ -90,8 +90,8 @@
         <h1 id="hed" style="font-size:10em; font-weight:900; text-align:center;"></h1>
         
         <div id="fooddiv" class="col-md-8 col-md-offset-2">
-<hr/>        
-        <button class="btn btn-mini btn-default" id="sorter">Newest first</button>
+<hr/>
+<div id="button"></div>
         <div id="food"></div>
         </div>
     </div>
@@ -108,6 +108,8 @@ var suffix = ''
                 $('body').css('background-color', '#006d2c');
                 $('#hed').html('Yes.').css('margin-bottom',0);
                 var len = json.feed.entry.length;
+                if (len > 1) {$('#button').html('<button class="btn btn-mini btn-default" id="sorter">Newest first</button>');};
+                
                 var list_content = '';
                 for (var i = 0; i < len; i++) {
                     var where = json.feed.entry[i].gsx$where.$t.toLowerCase();
