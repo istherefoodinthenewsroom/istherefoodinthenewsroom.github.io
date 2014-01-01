@@ -98,10 +98,8 @@
 
     <script>
 
-var minutes = '';
+var minutes, hour, suffix, time = '';
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-var hour = '';
-var suffix = '';
     
         function displayContent(json) {
             if (json.feed.entry && json.feed.entry.length) {
@@ -117,14 +115,20 @@ var suffix = '';
                     var when = new Date(json.feed.entry[i].gsx$timestamp.$t);
                     var weekday = when.getDay();
                     var milhour = when.getHours();
-                    var minutes = when.getMinutes();
-                    if (milhour < 12) {hour = milhour; suffix = 'a.m.'}
-                        else if (milhour == 0) {hour = 12; suffix = 'a.m.'}
-                        else if (milhour == 12) {hour = milhour; suffix = 'p.m.'}
-                        else
-                        {hour = milhour - 12; suffix = 'p.m.'};
+                    var rawmins = when.getMinutes().toString(); 
+                    if (rawmins.length == 1)
+                        {minutes = "0" + rawmins}
+                        else {minutes = rawmins};
+                    if (milhour == 0) {hour = 12; suffix = 'a.m.'}
+                        else if (milhour > 0 && milhour < 12) {hour = milhour; suffix = 'a.m.'}
+                        else if (milhour == 12) {hour = 12; suffix = 'p.m.'}
+                        else if (milhour > 12) {hour = milhour - 12; suffix = 'p.m.'};
+                    if (milhour == 12 && minutes == 0) {time = "noon"}
+                        else if (milhour == 0 && minutes == 0) {time = "midnight"}
+                        else {time = hour + ':' + minutes + ' ' + suffix};
+
                     list_content += [
-                        '<h3 class="listitem" data-date="' + when + '">' + what + ' <i class="fa fa-long-arrow-right"></i> ' + where + '<br/><small>spotted ' + days[weekday] + ' at ' + hour + ':' + minutes + ' ' + suffix + '</small></h3>'
+                        '<h3 class="listitem" data-date="' + when + '">' + what + ' <i class="fa fa-long-arrow-right"></i> ' + where + '<br/><small>spotted ' + days[weekday] + ' at ' + time + '</small></h3>'
                     ].join('');
 
                     document.getElementById('food').innerHTML = '<ul class="list-group">' + list_content
