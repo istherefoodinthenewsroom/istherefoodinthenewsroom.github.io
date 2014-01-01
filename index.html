@@ -125,6 +125,7 @@ var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
                         else if (milhour > 12) {hour = milhour - 12; suffix = 'p.m.'};
                     if (milhour == 12 && minutes == 0) {time = "noon"}
                         else if (milhour == 0 && minutes == 0) {time = "midnight"}
+                        else if (milhour != 12 && milhour != 0 && minutes == "00") {time = hour + ' ' + suffix}
                         else {time = hour + ':' + minutes + ' ' + suffix};
 
                     list_content += [
