@@ -119,6 +119,8 @@ var suffix = '';
                     var milhour = when.getHours();
                     var minutes = when.getMinutes();
                     if (milhour < 12) {hour = milhour; suffix = 'a.m.'}
+                        else if (milhour == 0) {hour = 12; suffix = 'a.m.'}
+                        else if (milhour == 12) {hour = milhour; suffix = 'p.m.'}
                         else
                         {hour = milhour - 12; suffix = 'p.m.'};
                     list_content += [
