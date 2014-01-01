@@ -86,10 +86,12 @@
   </div>
 </div>
 
-    <div style="color:white;" class="container text-center" id="answer">
-        <h1 id="hed" style="font-size:10em; font-weight:900;"></h1>
-        <div id="fooddiv">
-          <button class="btn btn-mini btn-default" id="sorter">Newest first</button>
+    <div style="color:white;" class="container" id="answer">
+        <h1 id="hed" style="font-size:10em; font-weight:900; text-align:center;"></h1>
+        
+        <div id="fooddiv" class="col-md-8 col-md-offset-2">
+<hr/>        
+        <button class="btn btn-mini btn-default" id="sorter">Newest first</button>
         <div id="food"></div>
         </div>
     </div>
@@ -97,37 +99,32 @@
     <script>
 
 var minutes = '';
+var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+var hour = '';
+var suffix = ''
     
-function toAp(num){if(typeof(num)!="string"){numstripped=parseInt(num)}else{numstring=num.replace(/,|$|�|�|%|(|)/g,'');numstripped=parseInt(numstring)};if(numstripped<10){var apnums=["zero","one","two","three","four","five","six","seven","eight","nine"];return apnums[numstripped]}else if(numstripped>999999){var striplength=numstripped.toString().length;if(striplength>=7&&striplength<=9){return((numstripped/1000000).toFixed(2)+' million').replace('.00','')}if(striplength>=10&&striplength<=12){return((numstripped/1000000000).toFixed(2)+' billion').replace('.00','')}if(striplength>=13&&striplength<=15){return((numstripped/1000000000000).toFixed(2)+' trillion').replace('.00','')}}else if(999>numstripped<999999){numstripped+='';x=numstripped.split('.');x1=x[0];x2=x.length>1?'.'+x[1]:'';var rgx=/(\d+)(\d{3})/;while(rgx.test(x1)){x1=x1.replace(rgx,'$1'+','+'$2')}return x1+x2}else{return numstripped}}
-    
-function minDiff(e) {
-  var then = new Date(e);
-  var now = new Date();
-  var ms = now - then;
-  var mins =  Math.floor(((ms % 86400000) % 3600000) / 60000);
-  if (now > then)
-    {return mins}
-  else
-    {return "?"}
-}
-
         function displayContent(json) {
             if (json.feed.entry && json.feed.entry.length) {
                 $('body').css('background-color', '#006d2c');
-                $('#hed').html('Yes.').css('margin-bottom', '150px');
+                $('#hed').html('Yes.').css('margin-bottom',0);
                 var len = json.feed.entry.length;
+                if (len = 1) {$('#sorter').hide()};
                 var list_content = '';
                 for (var i = 0; i < len; i++) {
                     var where = json.feed.entry[i].gsx$where.$t.toLowerCase();
                     var what = json.feed.entry[i].gsx$what.$t.toLowerCase();
-                    var when = json.feed.entry[i].gsx$timestamp.$t;
-                    var ago = minDiff(when);
-                    if (ago == 1) { minutes = "minute"} else {minutes = "minutes" }
+                    var when = new Date(json.feed.entry[i].gsx$timestamp.$t);
+                    var weekday = when.getDay();
+                    var milhour = when.getHours();
+                    var minutes = when.getMinutes();
+                    if (milhour < 12) {hour = milhour; suffix = 'a.m.'}
+                        else
+                        {hour = milhour - 12; suffix = 'p.m.'};
                     list_content += [
-                        '<h2 class="listitem" data-date="' + when + '">' + what + ' <i class="fa fa-long-arrow-right"></i> ' + where + ' (spotted ' + toAp(ago) + ' ' + minutes + ' ago)</h2>'
+                        '<h3 class="listitem" data-date="' + when + '">' + what + ' <i class="fa fa-long-arrow-right"></i> ' + where + '<br/><small>spotted ' + days[weekday] + ' at ' + hour + ':' + minutes + ' ' + suffix + '</small></h3>'
                     ].join('');
 
-                    document.getElementById('food').innerHTML = list_content
+                    document.getElementById('food').innerHTML = '<ul class="list-group">' + list_content
                 }
 
             } else {
@@ -137,9 +134,9 @@ function minDiff(e) {
             }
 
         }
-        
+
 $(function(){
-    var itemsArray = $('h2.listitem');
+    var itemsArray = $('h3.listitem');
     itemsArray.sort(function(a,b){
         var aTime = new Date($(a).attr('data-date')).getTime();
         var bTime = new Date($(b).attr('data-date')).getTime();
